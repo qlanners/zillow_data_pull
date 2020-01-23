@@ -1,0 +1,256 @@
+"""
+The below lists contain the url paths from which to pull data from Zillow for state, county, and city data.
+To be used by zillow_download_data.py
+"""
+STATE_URLS = [
+    "http://files.zillowstatic.com/research/public/State/State_MedianRentalPrice_Studio.csv",
+    "http://files.zillowstatic.com/research/public/State/State_MedianRentalPrice_1Bedroom.csv",
+    "http://files.zillowstatic.com/research/public/State/State_MedianRentalPrice_2Bedroom.csv",
+    "http://files.zillowstatic.com/research/public/State/State_MedianRentalPrice_3Bedroom.csv",
+    "http://files.zillowstatic.com/research/public/State/State_MedianRentalPrice_4Bedroom.csv",
+    "http://files.zillowstatic.com/research/public/State/State_MedianRentalPrice_Sfr.csv",
+    "http://files.zillowstatic.com/research/public/State/State_MedianRentalPricePerSqft_Studio.csv",
+    "http://files.zillowstatic.com/research/public/State/State_MedianRentalPricePerSqft_1Bedroom.csv",
+    "http://files.zillowstatic.com/research/public/State/State_MedianRentalPricePerSqft_2Bedroom.csv",
+    "http://files.zillowstatic.com/research/public/State/State_MedianRentalPricePerSqft_3Bedroom.csv",
+    "http://files.zillowstatic.com/research/public/State/State_MedianRentalPricePerSqft_4Bedroom.csv",
+    "http://files.zillowstatic.com/research/public/State/State_MedianRentalPricePerSqft_Sfr.csv",
+    "http://files.zillowstatic.com/research/public/State/State_MedianListingPrice_AllHomes.csv",
+    "http://files.zillowstatic.com/research/public/State/State_MedianListingPrice_BottomTier.csv",
+    "http://files.zillowstatic.com/research/public/State/State_MedianListingPrice_TopTier.csv",
+    "http://files.zillowstatic.com/research/public/State/Sale_Counts_State.csv",
+    "http://files.zillowstatic.com/research/public/State/SalesPrevForeclosed_Share_State.csv",
+    "http://files.zillowstatic.com/research/public/State/MedianDailyListings_NSA_AllHomes_State.csv",
+    "http://files.zillowstatic.com/research/public/State/MonthlyListings_NSA_AllHomes_State.csv",
+    "http://files.zillowstatic.com/research/public/State/SaleToListRatio_State.csv",
+    "http://files.zillowstatic.com/research/public/State/DaysOnZillow_State.csv",
+    "http://files.zillowstatic.com/research/public/State/State_MedianPctOfPriceReduction_AllHomes.csv",
+    "http://files.zillowstatic.com/research/public/State/State_Listings_PriceCut_SeasAdj_AllHomes.csv",
+    "http://files.zillowstatic.com/research/public/State/State_MedianListingPricePerSqft_AllHomes.csv",
+    "http://files.zillowstatic.com/research/public/State/State_MedianListingPricePerSqft_BottomTier.csv",
+    "http://files.zillowstatic.com/research/public/State/State_MedianListingPricePerSqft_TopTier.csv"
+]
+
+COUNTY_URLS = [
+    "http://files.zillowstatic.com/research/public/County/County_MedianRentalPrice_Studio.csv",
+    "http://files.zillowstatic.com/research/public/County/County_MedianRentalPrice_1Bedroom.csv",
+    "http://files.zillowstatic.com/research/public/County/County_MedianRentalPrice_2Bedroom.csv",
+    "http://files.zillowstatic.com/research/public/County/County_MedianRentalPrice_3Bedroom.csv",
+    "http://files.zillowstatic.com/research/public/County/County_MedianRentalPrice_4Bedroom.csv",
+    "http://files.zillowstatic.com/research/public/County/County_MedianRentalPrice_Sfr.csv",
+    "http://files.zillowstatic.com/research/public/County/County_MedianRentalPricePerSqft_Studio.csv",
+    "http://files.zillowstatic.com/research/public/County/County_MedianRentalPricePerSqft_1Bedroom.csv",
+    "http://files.zillowstatic.com/research/public/County/County_MedianRentalPricePerSqft_2Bedroom.csv",
+    "http://files.zillowstatic.com/research/public/County/County_MedianRentalPricePerSqft_3Bedroom.csv",
+    "http://files.zillowstatic.com/research/public/County/County_MedianRentalPricePerSqft_4Bedroom.csv",
+    "http://files.zillowstatic.com/research/public/County/County_MedianRentalPricePerSqft_Sfr.csv",
+    "http://files.zillowstatic.com/research/public/County/County_MedianListingPrice_AllHomes.csv",
+    "http://files.zillowstatic.com/research/public/County/County_MedianListingPrice_BottomTier.csv",
+    "http://files.zillowstatic.com/research/public/County/County_MedianListingPrice_TopTier.csv",
+    "http://files.zillowstatic.com/research/public/County/Sale_Counts_County.csv",
+    "http://files.zillowstatic.com/research/public/County/SalesPrevForeclosed_Share_County.csv",
+    "http://files.zillowstatic.com/research/public/County/MedianDailyListings_NSA_AllHomes_County.csv",
+    "http://files.zillowstatic.com/research/public/County/MonthlyListings_NSA_AllHomes_County.csv",
+    "http://files.zillowstatic.com/research/public/County/SaleToListRatio_County.csv",
+    "http://files.zillowstatic.com/research/public/County/DaysOnZillow_County.csv",
+    "http://files.zillowstatic.com/research/public/County/County_MedianPctOfPriceReduction_AllHomes.csv",
+    "http://files.zillowstatic.com/research/public/County/County_Listings_PriceCut_SeasAdj_AllHomes.csv",
+    "http://files.zillowstatic.com/research/public/County/County_MedianListingPricePerSqft_AllHomes.csv",
+    "http://files.zillowstatic.com/research/public/County/County_MedianListingPricePerSqft_BottomTier.csv",
+    "http://files.zillowstatic.com/research/public/County/County_MedianListingPricePerSqft_TopTier.csv"
+
+]
+
+CITY_URLS = [
+    "http://files.zillowstatic.com/research/public/City/City_MedianRentalPrice_Studio.csv",
+    "http://files.zillowstatic.com/research/public/City/City_MedianRentalPrice_1Bedroom.csv",
+    "http://files.zillowstatic.com/research/public/City/City_MedianRentalPrice_2Bedroom.csv",
+    "http://files.zillowstatic.com/research/public/City/City_MedianRentalPrice_3Bedroom.csv",
+    "http://files.zillowstatic.com/research/public/City/City_MedianRentalPrice_4Bedroom.csv",
+    "http://files.zillowstatic.com/research/public/City/City_MedianRentalPrice_Sfr.csv",
+    "http://files.zillowstatic.com/research/public/City/City_MedianRentalPricePerSqft_Studio.csv",
+    "http://files.zillowstatic.com/research/public/City/City_MedianRentalPricePerSqft_1Bedroom.csv",
+    "http://files.zillowstatic.com/research/public/City/City_MedianRentalPricePerSqft_2Bedroom.csv",
+    "http://files.zillowstatic.com/research/public/City/City_MedianRentalPricePerSqft_3Bedroom.csv",
+    "http://files.zillowstatic.com/research/public/City/City_MedianRentalPricePerSqft_4Bedroom.csv",
+    "http://files.zillowstatic.com/research/public/City/City_MedianRentalPricePerSqft_Sfr.csv",
+    "http://files.zillowstatic.com/research/public/City/City_MedianListingPrice_AllHomes.csv",
+    "http://files.zillowstatic.com/research/public/City/City_MedianListingPrice_BottomTier.csv",
+    "http://files.zillowstatic.com/research/public/City/City_MedianListingPrice_TopTier.csv",
+    "http://files.zillowstatic.com/research/public/City/Sale_Counts_City.csv",
+    "http://files.zillowstatic.com/research/public/City/SalesPrevForeclosed_Share_City.csv",
+    "http://files.zillowstatic.com/research/public/City/MedianDailyListings_NSA_AllHomes_City.csv",
+    "http://files.zillowstatic.com/research/public/City/MonthlyListings_NSA_AllHomes_City.csv",
+    "http://files.zillowstatic.com/research/public/City/SaleToListRatio_City.csv",
+    "http://files.zillowstatic.com/research/public/City/DaysOnZillow_City.csv",
+    "http://files.zillowstatic.com/research/public/City/City_MedianPctOfPriceReduction_AllHomes.csv",
+    "http://files.zillowstatic.com/research/public/City/City_Listings_PriceCut_SeasAdj_AllHomes.csv",
+    "http://files.zillowstatic.com/research/public/City/City_MedianListingPricePerSqft_AllHomes.csv",
+    "http://files.zillowstatic.com/research/public/City/City_MedianListingPricePerSqft_BottomTier.csv",
+    "http://files.zillowstatic.com/research/public/City/City_MedianListingPricePerSqft_TopTier.csv"
+
+]
+
+"""
+The below lists of tuples correspond to the csv files pulled from Zillow for state, county, and city data.
+Index 0 of each tuple corresponds to the file name and index 1 corresponds to the column name under which
+that csv files data should be stored in the output summary csv.
+To be used by rental_organizer.py
+"""
+STATE_FILES = [
+    ('State_MedianRentalPrice_Studio.csv', 'median_studio'),
+    ('State_MedianRentalPrice_1Bedroom.csv', 'median_one_bed'),
+    ('State_MedianRentalPrice_2Bedroom.csv', 'median_two_bed'),
+    ('State_MedianRentalPrice_3Bedroom.csv', 'median_three_bed'),
+    ('State_MedianRentalPrice_4Bedroom.csv', 'median_four_bed'),
+    ('State_MedianRentalPrice_Sfr.csv', 'median_sfr'),
+    ('State_MedianRentalPricePerSqft_Studio.csv', 'median_sqft_studio'),
+    ('State_MedianRentalPricePerSqft_1Bedroom.csv', 'median_sqft_one_bed'),
+    ('State_MedianRentalPricePerSqft_2Bedroom.csv', 'median_sqft_two_bed'),
+    ('State_MedianRentalPricePerSqft_3Bedroom.csv', 'median_sqft_three_bed'),
+    ('State_MedianRentalPricePerSqft_4Bedroom.csv', 'median_sqft_four_bed'),
+    ('State_MedianRentalPricePerSqft_Sfr.csv', 'median_sqft_sfr'),
+    ('State_MedianListingPrice_AllHomes.csv', 'median_list_price_all'),
+    ('State_MedianListingPrice_BottomTier.csv', 'median_list_price_bot'),
+    ('State_MedianListingPrice_TopTier.csv', 'median_list_price_top'),
+    ('Sale_Counts_State.csv', 'sales_count'),
+    ('SalesPrevForeclosed_Share_State.csv', 'foreclosure_resale_perc'),
+    ('MedianDailyListings_NSA_AllHomes_State.csv', 'median_daily_listings_all'),
+    ('MonthlyListings_NSA_AllHomes_State.csv', 'monthly_listings_all'),
+    ('SaleToListRatio_State.csv', 'sales_list_ratio'),
+    ('DaysOnZillow_State.csv', 'days_on_zillow'),
+    ('State_MedianPctOfPriceReduction_AllHomes.csv', 'median_price_reduced_all'),
+    ('State_Listings_PriceCut_SeasAdj_AllHomes.csv', 'price_cut_seas_adj_all'),
+    ('State_MedianListingPricePerSqft_AllHomes.csv', 'median_sqft_list_price_all'),
+    ('State_MedianListingPricePerSqft_BottomTier.csv', 'median_sqft_list_price_bot'),
+    ('State_MedianListingPricePerSqft_TopTier.csv', 'median_sqft_list_price_top')
+]
+
+COUNTY_FILES = [
+    ('County_MedianRentalPrice_Studio.csv', 'median_studio'),
+    ('County_MedianRentalPrice_1Bedroom.csv', 'median_one_bed'),
+    ('County_MedianRentalPrice_2Bedroom.csv', 'median_two_bed'),
+    ('County_MedianRentalPrice_3Bedroom.csv', 'median_three_bed'),
+    ('County_MedianRentalPrice_4Bedroom.csv', 'median_four_bed'),
+    ('County_MedianRentalPrice_Sfr.csv', 'median_sfr'),
+    ('County_MedianRentalPricePerSqft_Studio.csv', 'median_sqft_studio'),
+    ('County_MedianRentalPricePerSqft_1Bedroom.csv', 'median_sqft_one_bed'),
+    ('County_MedianRentalPricePerSqft_2Bedroom.csv', 'median_sqft_two_bed'),
+    ('County_MedianRentalPricePerSqft_3Bedroom.csv', 'median_sqft_three_bed'),
+    ('County_MedianRentalPricePerSqft_4Bedroom.csv', 'median_sqft_four_bed'),
+    ('County_MedianRentalPricePerSqft_Sfr.csv', 'median_sqft_sfr'),
+    ('County_MedianListingPrice_AllHomes.csv', 'median_list_price_all'),
+    ('County_MedianListingPrice_BottomTier.csv', 'median_list_price_bot'),
+    ('County_MedianListingPrice_TopTier.csv', 'median_list_price_top'),
+    ('Sale_Counts_County.csv', 'sales_count'),
+    ('SalesPrevForeclosed_Share_County.csv', 'foreclosure_resale_perc'),
+    ('MedianDailyListings_NSA_AllHomes_County.csv', 'median_daily_listings_all'),
+    ('MonthlyListings_NSA_AllHomes_County.csv', 'monthly_listings_all'),
+    ('SaleToListRatio_County.csv', 'sales_list_ratio'),
+    ('DaysOnZillow_County.csv', 'days_on_zillow'),
+    ('County_MedianPctOfPriceReduction_AllHomes.csv', 'median_price_reduced_all'),
+    ('County_Listings_PriceCut_SeasAdj_AllHomes.csv', 'price_cut_seas_adj_all'),
+    ('County_MedianListingPricePerSqft_AllHomes.csv', 'median_sqft_list_price_all'),
+    ('County_MedianListingPricePerSqft_BottomTier.csv', 'median_sqft_list_price_bot'),
+    ('County_MedianListingPricePerSqft_TopTier.csv', 'median_sqft_list_price_top')
+]
+
+CITY_FILES = [
+    ('City_MedianRentalPrice_Studio.csv', 'median_studio'),
+    ('City_MedianRentalPrice_1Bedroom.csv', 'median_one_bed'),
+    ('City_MedianRentalPrice_2Bedroom.csv', 'median_two_bed'),
+    ('City_MedianRentalPrice_3Bedroom.csv', 'median_three_bed'),
+    ('City_MedianRentalPrice_4Bedroom.csv', 'median_four_bed'),
+    ('City_MedianRentalPrice_Sfr.csv', 'median_sfr'),
+    ('City_MedianRentalPricePerSqft_Studio.csv', 'median_sqft_studio'),
+    ('City_MedianRentalPricePerSqft_1Bedroom.csv', 'median_sqft_one_bed'),
+    ('City_MedianRentalPricePerSqft_2Bedroom.csv', 'median_sqft_two_bed'),
+    ('City_MedianRentalPricePerSqft_3Bedroom.csv', 'median_sqft_three_bed'),
+    ('City_MedianRentalPricePerSqft_4Bedroom.csv', 'median_sqft_four_bed'),
+    ('City_MedianRentalPricePerSqft_Sfr.csv', 'median_sqft_sfr'),
+    ('City_MedianListingPrice_AllHomes.csv', 'median_list_price_all'),
+    ('City_MedianListingPrice_BottomTier.csv', 'median_list_price_bot'),
+    ('City_MedianListingPrice_TopTier.csv', 'median_list_price_top'),
+    ('Sale_Counts_City.csv', 'sales_count'),
+    ('SalesPrevForeclosed_Share_City.csv', 'foreclosure_resale_perc'),
+    ('MedianDailyListings_NSA_AllHomes_City.csv', 'median_daily_listings_all'),
+    ('MonthlyListings_NSA_AllHomes_City.csv', 'monthly_listings_all'),
+    ('SaleToListRatio_City.csv', 'sales_list_ratio'),
+    ('DaysOnZillow_City.csv', 'days_on_zillow'),
+    ('City_MedianPctOfPriceReduction_AllHomes.csv', 'median_price_reduced_all'),
+    ('City_Listings_PriceCut_SeasAdj_AllHomes.csv', 'price_cut_seas_adj_all'),
+    ('City_MedianListingPricePerSqft_AllHomes.csv', 'median_sqft_list_price_all'),
+    ('City_MedianListingPricePerSqft_BottomTier.csv', 'median_sqft_list_price_bot'),
+    ('City_MedianListingPricePerSqft_TopTier.csv', 'median_sqft_list_price_top')
+]
+
+STATE_ABBREVS = {
+    'Alabama': 'AL',
+    'Alaska': 'AK',
+    'Arizona': 'AZ',
+    'Arkansas': 'AR',
+    'California': 'CA',
+    'Colorado': 'CO',
+    'Connecticut': 'CT',
+    'Delaware': 'DE',
+    'District of Columbia': 'DC',
+    'Florida': 'FL',
+    'Georgia': 'GA',
+    'Hawaii': 'HI',
+    'Idaho': 'ID',
+    'Illinois': 'IL',
+    'Indiana': 'IN',
+    'Iowa': 'IA',
+    'Kansas': 'KS',
+    'Kentucky': 'KY',
+    'Louisiana': 'LA',
+    'Maine': 'ME',
+    'Maryland': 'MD',
+    'Massachusetts': 'MA',
+    'Michigan': 'MI',
+    'Minnesota': 'MN',
+    'Mississippi': 'MS',
+    'Missouri': 'MO',
+    'Montana': 'MT',
+    'Nebraska': 'NE',
+    'Nevada': 'NV',
+    'New Hampshire': 'NH',
+    'New Jersey': 'NJ',
+    'New Mexico': 'NM',
+    'New York': 'NY',
+    'North Carolina': 'NC',
+    'North Dakota': 'ND',
+    'Northern Mariana Islands':'MP',
+    'Ohio': 'OH',
+    'Oklahoma': 'OK',
+    'Oregon': 'OR',
+    'Palau': 'PW',
+    'Pennsylvania': 'PA',
+    'Puerto Rico': 'PR',
+    'Rhode Island': 'RI',
+    'South Carolina': 'SC',
+    'South Dakota': 'SD',
+    'Tennessee': 'TN',
+    'Texas': 'TX',
+    'Utah': 'UT',
+    'Vermont': 'VT',
+    'Virgin Islands': 'VI',
+    'Virginia': 'VA',
+    'Washington': 'WA',
+    'West Virginia': 'WV',
+    'Wisconsin': 'WI',
+    'Wyoming': 'WY',
+}
+
+"""
+Global variables to specify the location of the data pulled using zillow_data_download.py,
+and the folder location and file names of the created summary output csvs.
+"""
+STATE_DATA_FOLDER = 'zillow-state-data'
+COUNTY_DATA_FOLDER = 'zillow-county-data'
+CITY_DATA_FOLDER = 'zillow-city-data'
+
+SUMMARY_FOLDER = 'zillow-data-cleaned'
+STATE_SUMMARY_FILE = 'state-monthly'
+COUNTY_SUMMARY_FILE = 'county-monthly'
+CITY_SUMMARY_FILE = 'city-monthly'
