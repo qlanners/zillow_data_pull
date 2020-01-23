@@ -7,6 +7,7 @@ description: This python file downloads economic data from Zillow. The downloade
 of csv files, and these files are saved to seperate folders for state, county, and city data. The python
 file rental_organizer.py is then used to reformat these several downloaded csvs into a more compact summary file.
 """
+from datetime import datetime
 import os
 import os.path
 from selenium import webdriver
@@ -51,7 +52,7 @@ def download_files(driver, urls, download_folder):
             returns:
                 Nothing. Saves all downloads to specified folder and prints out summary message.
     """
-    report_file_name = "{}/{}/{}.txt".format(os.getenv('LOG_FOLDER'), os.getenv('TODAYS_DATE'), download_folder.split('/')[-1])
+    report_file_name = "{}/{}/{}.txt".format(os.getenv('LOG_FOLDER','logs'), os.getenv('TODAYS_DATE',datetime.now().strftime("%Y-%m-%d")), download_folder.split('/')[-1])
     report = open(report_file_name,"w+")
 
     failed = 0
@@ -78,9 +79,9 @@ def download_files(driver, urls, download_folder):
 working_dir = os.getcwd()
 
 download_sets = {
-    os.getenv('STATE_DATA_FOLDER'): STATE_URLS,
-    os.getenv('COUNTY_DATA_FOLDER'): COUNTY_URLS,
-    os.getenv('CITY_DATA_FOLDER'): CITY_URLS
+    os.getenv('STATE_DATA_FOLDER','state-data'): STATE_URLS,
+    os.getenv('COUNTY_DATA_FOLDER','county-data'): COUNTY_URLS,
+    os.getenv('CITY_DATA_FOLDER','city-data'): CITY_URLS
 }
 
 for k,v in download_sets.items():

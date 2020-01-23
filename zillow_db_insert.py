@@ -4,10 +4,11 @@ import pandas as pd
 import os
 from os import listdir, getcwd
 from os.path import isfile, join
+import sys
 
 
 def insert_data(type, csv_name, log_name):
-	engine = create_engine('postgresql://qlanners:MNMiracle18@localhost:5432/homefinder')
+	engine = create_engine('{}://{}:{}@{}:{}/{}'.format(*sys.argv[1:]))
 
 	db_log = open(log_name,"a+")
 
