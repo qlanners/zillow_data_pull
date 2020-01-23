@@ -1,0 +1,6 @@
+# Ignore all directories
+
+*/
+
+.DS_Store
+__pycache__

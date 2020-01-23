@@ -51,7 +51,7 @@ def download_files(driver, urls, download_folder):
             returns:
                 Nothing. Saves all downloads to specified folder and prints out summary message.
     """
-    report_file_name = "{}/{}/{}.txt".format(os.getenv('LOG_FOLDER'), os.getenv('TODAYS_DATE'), download_folder)
+    report_file_name = "{}/{}/{}.txt".format(os.getenv('LOG_FOLDER'), os.getenv('TODAYS_DATE'), download_folder.split('/')[-1])
     report = open(report_file_name,"w+")
 
     failed = 0

@@ -14,7 +14,6 @@ import math
 import os
 import pandas as pd
 from sqlalchemy import create_engine
-from datetime import datetime
 
 #import lists of file paths and column names to reformat
 from zillow_paths import STATE_FILES, COUNTY_FILES, CITY_FILES, STATE_ABBREVS
@@ -68,12 +67,12 @@ def get_ids(type, state_file, city_county_file=None):
     return {y[0]: y[1] for x, y in state_dict.items()}
 
 
-def rental_organizer(type, input, monthly_df, label, ids, report_file_name, get_months=None, go_back=0):
+def rental_organizer(type, input_file, monthly_df, label, ids, report_file_name, get_months=None, go_back=0):
     """
     rental_organizer: reformats data from specified input file as new column in monthly_df summary dataframe.
             args:
                 type: the location type (must be state, county, or city)
-                input: file path containing data to reformat
+                input_file: file path containing data to reformat
                 monthly_df: the reformatted dataframe to append the data too
                 label: the column name under which this file paths data should be appended as to monthly_df
                 ids: ids for the input type, retrieved us get_ids
@@ -97,7 +96,7 @@ def rental_organizer(type, input, monthly_df, label, ids, report_file_name, get_
         exit()
 
     try:
-        df = pd.read_csv(input, encoding='latin_1')
+        df = pd.read_csv(input_file, encoding='latin_1')
 
         # Check to make sure there is data for the months we are looking for
         if go_back > 0:
@@ -123,17 +122,21 @@ def rental_organizer(type, input, monthly_df, label, ids, report_file_name, get_
 
         #Pull data from csv for desired months, printing out a message each time there is an error.
         missed_regions = {m: [] for m in months}
+        total_misses = 0
         for i, r in df.iterrows():
             for m in months:
                 if not math.isnan(r[m]):
-                    if type.lower() == 'state':
+                    # If it's a state, we will match the region info, unless its puerto rico
+                    if type.lower() == 'state' and 'puerto' not in r['RegionName'].lower():
                         months_w_data.append([ids[r['RegionName']], pd.to_datetime(m, format="%Y-%m"), m[:4], m[-2:], r[m]])
+                    # If it's other region type, check to see if we want it (have an id for it)
                     else:
                         try:
                             months_w_data.append(
                                 [ids[r['State']][r['RegionName']], pd.to_datetime(m, format="%Y-%m"), m[:4], m[-2:], r[m]])
                         except:
                             missed_regions[m].append(r['RegionName'])
+                total_misses += len(missed_regions[m])
 
         #Put data into a dataframe and label columns
         organized = pd.DataFrame(months_w_data, columns=[type.lower(), 'date', 'year', 'month', label])
@@ -154,19 +157,18 @@ def rental_organizer(type, input, monthly_df, label, ids, report_file_name, get_
                 final.at[i, 'date_x'] = r['date_y']
         final = final.drop(['date_y'], axis=1)
         final.rename(columns={'date_x': 'date'}, inplace=True)
-        num_misses = len(missed_regions['2019-09'])
-        report.write("*"*math.ceil(num_misses/10))
-        report.write('\nAdded data from {} under column name {} -----'.format(input, label))
+        report.write("*"*min(math.ceil(total_misses/10),50))
+        report.write('\nAdded data from {} under column name {} -----'.format(input_file, label))
         try:
-            report.write("Misses: {}\n\n".format(num_misses))
+            report.write("Misses: {}\n\n".format(total_misses))
         except:
             report.write('**********No months here**********\n\n')
 
         final.drop_duplicates(subset=[type, 'year', 'month'], keep='first', inplace=True)
         return final[cols]
     except:
-        print('****\n***Unable to retrieve and reformat data for {}***\n****'.format(input))
-        report.write('****\n***Unable to retrieve and reformat data for {}***\n****'.format(input))
+        print('****\n***Unable to retrieve and reformat data for {}***\n****'.format(input_file))
+        report.write('****\n***Unable to retrieve and reformat data for {}***\n****'.format(input_file))
         report.close()
         return monthly_df
 
@@ -204,19 +206,19 @@ def save_df(final, save_file, location_type):
 
 
 #Create IDs and intitialize empty dataframes for each location type
-state_ids = get_ids('state', state_file='states.csv')
+state_ids = get_ids('state', state_file='ids/states.csv')
 state_df = pd.DataFrame(columns=['state', 'date', 'year', 'month'])
 
-county_ids = get_ids('county', state_file='states.csv', city_county_file='counties.csv')
+county_ids = get_ids('county', state_file='ids/states.csv', city_county_file='ids/counties.csv')
 county_df = pd.DataFrame(columns=['county', 'date', 'year', 'month'])
 
-city_ids = get_ids('city', state_file='states.csv', city_county_file='cities.csv')
+city_ids = get_ids('city', state_file='ids/states.csv', city_county_file='ids/cities.csv')
 city_df = pd.DataFrame(columns=['city', 'date', 'year', 'month'])
 
 #Create logging files
-processed_date = datetime.now().strftime("%m/%d/%Y, %H:%M:%S")
-log_folder = os.getenv('LOG_FOLDER')
-todays_date = os.getenv('TODAYS_DATE')
+processed_date = datetime.datetime.now().strftime("%m/%d/%Y, %H:%M:%S")
+log_folder = os.getenv('LOG_FOLDER', 'logs')
+todays_date = os.getenv('TODAYS_DATE', datetime.datetime.now().strftime("%Y-%m-%d"))
 state_report_file = "{}/{}/state_organizer_report.txt".format(log_folder, todays_date)
 county_report_file = "{}/{}/county_organizer_report.txt".format(log_folder, todays_date)
 city_report_file = "{}/{}/city_organizer_report.txt".format(log_folder, todays_date)
@@ -230,17 +232,23 @@ with open(city_report_file,"w+") as city_report:
 
 
 #Get the months to scrape passed to the script
-new_months = os.getenv('NEW_MONTHS').split(',')
+new_months = os.getenv('NEW_MONTHS','2019-10')
+if new_months:
+    new_months = new_months.split(',')
+else:
+    print('****No months specified****')
+    print('Aborting Data Clean')
+    exit()
 
 #Reformat data from all of the specified files for each location type, saving results to specified file paths
 for f in STATE_FILES:
-    state_df = rental_organizer('state', '{}/{}'.format(STATE_DATA_FOLDER, f[0]), state_df, f[1], state_ids, state_report_file, get_months=new_months)
-save_df(state_df, '{}/{}'.format(os.getenv('SUMMARY_FOLDER'), os.getenv('STATE_SUMMARY_FILE')), 'state')
+    state_df = rental_organizer('state', '{}/{}'.format(os.getenv('STATE_DATA_FOLDER','state-data'), f[0]), state_df, f[1], state_ids, state_report_file, get_months=new_months)
+save_df(state_df, '{}/{}.csv'.format(os.getenv('SUMMARY_FOLDER','data-cleaned'), os.getenv('STATE_SUMMARY_FILE','state-monthly')), 'state')
 
 for f in COUNTY_FILES:
-    county_df = rental_organizer('county', '{}/{}'.format(COUNTY_DATA_FOLDER, f[0]), county_df, f[1], county_ids, county_report_file, get_months=new_months)
-save_df(county_df, '{}/{}'.format(os.getenv('SUMMARY_FOLDER'), os.getenv('COUNTY_SUMMARY_FILE')), 'county')
+    county_df = rental_organizer('county', '{}/{}'.format(os.getenv('COUNTY_DATA_FOLDER','county-data'), f[0]), county_df, f[1], county_ids, county_report_file, get_months=new_months)
+save_df(county_df, '{}/{}'.format(os.getenv('SUMMARY_FOLDER','data-cleaned'), os.getenv('COUNTY_SUMMARY_FILE','county-monthly')), 'county')
 
 for f in CITY_FILES:
-    city_df = rental_organizer('city', '{}/{}'.format(CITY_DATA_FOLDER, f[0]), city_df, f[1], city_ids, city_report_file, get_months=new_months)
-save_df(city_df, '{}/{}'.format(os.getenv('SUMMARY_FOLDER'), os.getenv('CITY_SUMMARY_FILE')), 'city')
+    city_df = rental_organizer('city', '{}/{}'.format(os.getenv('CITY_DATA_FOLDER','city-data'), f[0]), city_df, f[1], city_ids, city_report_file, get_months=new_months)
+save_df(city_df, '{}/{}'.format(os.getenv('SUMMARY_FOLDER','data-cleaned'), os.getenv('CITY_SUMMARY_FILE','city-monthly')), 'city')

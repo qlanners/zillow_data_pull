@@ -19,7 +19,7 @@ def insert_data(type, csv_name, log_name):
 
 	db_log.write("Current max id in rentals_{}_data is {}\nWill begin inserting data with id #{}\n".format(type, max_city_data_id, max_city_data_id+1))
 
-	data_df = pd.read_csv('zillow-data-cleaned/{}'.format(csv_name))
+	data_df = pd.read_csv('{}/{}'.format(os.getenv('SUMMARY_FOLDER','data-cleaned'), csv_name))
 
 	data_df.rename(columns={'{}'.format(type):'{}_id'.format(type)}, inplace=True)
 	data_df['id'] += max_city_data_id
@@ -67,14 +67,14 @@ def insert_data(type, csv_name, log_name):
 
 	db_log.close()
 
-cleaned_data_path = join(getcwd(), os.getenv('SUMMARY_FOLDER'))
+cleaned_data_path = join(getcwd(), os.getenv('SUMMARY_FOLDER','data-cleaned'))
 all_cleaned_data_files = [f for f in listdir(cleaned_data_path) if isfile(join(cleaned_data_path, f))]
 
-state_csvs = [f for f in all_cleaned_data_files if 'state' in f]
-county_csvs = [f for f in all_cleaned_data_files if 'county' in f]
-city_csvs = [f for f in all_cleaned_data_files if 'city' in f]
+state_csvs = [f for f in all_cleaned_data_files if os.getenv('STATE_SUMMARY_FILE','state-monthly') in f]
+county_csvs = [f for f in all_cleaned_data_files if os.getenv('COUNTY_SUMMARY_FILE','county-monthly') in f]
+city_csvs = [f for f in all_cleaned_data_files if os.getenv('CITY_SUMMARY_FILE','city-monthly') in f]
 
-db_commit_log = "{}/{}/db_commit_report.txt".format(os.getenv('LOG_FOLDER'), os.getenv('TODAYS_DATE'))
+db_commit_log = "{}/{}/db_commit_report.txt".format(os.getenv('LOG_FOLDER','logs'), os.getenv('TODAYS_DATE',datetime.now().strftime("%Y-%m-%d")))
 
 with open(db_commit_log,"w+") as db_log:
 	db_log.write("Beginning database commits at: {}\n".format(datetime.now()))
@@ -89,6 +89,8 @@ for f in city_csvs:
 	insert_data('city', f, db_commit_log)
 
 
+with open(db_commit_log,"a+") as db_log:
+	db_log.write("Finished database commits at: {}\n".format(datetime.now()))
 
 
 
